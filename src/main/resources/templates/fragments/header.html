@@ -1,0 +1,17 @@
+<header class="header" th:fragment="header" xmlns:th="http://www.springframework.org/schema/security">
+  <h1>Codefellowship</h1>
+  <nav>
+    <a href="/">Home</a>
+
+    <span th:if="${principal == null}">
+            <a href="/login">Log In</a>
+            <a href="/signup">Sign Up</a>
+        </span>
+    <span th:unless="${principal == null}">
+            Hello, <span th:text="${principal}"></span>!
+            <a href="/myprofile">My Profile</a>
+            <a href="/logout">Log out</a>
+        </span>
+
+  </nav>
+</header>

@@ -1,5 +1,4 @@
 package com.example.demo.security;
-
 import com.example.demo.Web.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,12 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
 
@@ -28,25 +28,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/*").permitAll()
+                // allow requests to all URLS that match the patterns even if not logged in
+                .antMatchers("/", "/users", "/login", "/signup").permitAll()
+                // anything else, you must be logged in
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/myprofile")
+                .loginPage("/login").defaultSuccessUrl("/myprofile",true)
                 .and()
-                .logout();
+                .logout()
+                .logoutSuccessUrl("/login")
+        ;
     }
 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public UserDetailsServiceImpl getUserDetailsService() {
+        return new UserDetailsServiceImpl();
     }
 
 }
