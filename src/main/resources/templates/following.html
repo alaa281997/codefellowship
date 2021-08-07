@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">...</div>
+
+<h2>Following</h2>
+
+<ul class="following-list">
+  <li th:each="user : ${users}">
+    <a th:href="@{'/users/' + ${user.id}}">
+      <span th:text="${user.firstname}"></span>
+      <span th:text="${user.lastname}"></span>
+    </a>
+
+  </li>
+</ul>
+
+</body>
+</html>

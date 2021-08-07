@@ -10,29 +10,35 @@
           crossorigin="anonymous"
   >
 </head>
-<body>
+
+
 <div th:replace="fragments/header :: header">...</div>
 
 <main class="container">
   <h1>My Profile</h1>
 
-  <h2>Hello, <span th:text="${appUser.firstname}"></span></h2>
+  <div style="text-align:center">
+    <h2>Hello, <span th:text="${appUser.firstname}"></span></h2>
 
 
-  <h1>Username: <span th:text="${appUser.username}"></span></h1>
+    <h1>Username: <span th:text="${appUser.username}"></span></h1>
 
-  <p>First Name: <span th:text="${appUser.firstname}"></span></p>
-  <p>Last Name: <span th:text="${appUser.lastname}"></span></p>
-  <p>Date of Birth: <span th:text="${appUser.dob}"></span></p>
-  <p>Bio: <span th:text="${appUser.bio}"></span></p>
+    <p>First Name: <span th:text="${appUser.firstname}"></span></p>
+    <p>Last Name: <span th:text="${appUser.lastname}"></span></p>
+    <p>Date of Birth: <span th:text="${appUser.dob}"></span></p>
+    <p>Bio: <span th:text="${appUser.bio}"></span></p>
+    <div style="width: 100%;border: 1px solid blue;box-sizing: border-box;">
+      <ul>
+        <h3>Posts</h3>
+        <li th:each="post : ${appUser.posts}">
+          <p><span th:text="${post.createdAt}"></span></p>
+          <p><span th:text="${post.body}"></span></p>
+        </li>
+      </ul>
+    </div>
 
+  </div>
 
-  <ul>
-    <li th:each="post : ${appUser.posts}">
-      <p><span th:text="${post.createdAt}"></span></p>
-      <p><span th:text="${post.body}"></span></p>
-    </li>
-  </ul>
 </main>
 </body>
 </html> 

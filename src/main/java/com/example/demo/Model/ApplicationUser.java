@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -23,11 +24,21 @@ public class ApplicationUser implements UserDetails {
     String lastname;
     String bio;
 
+    @OneToMany(mappedBy = "appUser")
+    List<Post> posts;
 
+    @ManyToMany
+    public
+    Set<ApplicationUser> followers;
 
-    public ApplicationUser(){}
+    @ManyToMany
+    public
+    Set<ApplicationUser> following;
 
-    public ApplicationUser(String username,String password, Date dob, String firstname, String lastname, String bio){
+    public ApplicationUser() {
+    }
+
+    public ApplicationUser(String username, String password, Date dob, String firstname, String lastname, String bio) {
         this.password = password;
         this.username = username;
         this.dob = dob;
@@ -36,22 +47,11 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
     }
 
-    public ApplicationUser(String username, String password){
+    public ApplicationUser(String username, String password) {
         this.password = password;
         this.username = username;
     }
 
-    @OneToMany(mappedBy = "applicationUser")
-    List<Post> posts;
-
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
 
     public String getUsername() {
         return this.username;
@@ -82,6 +82,10 @@ public class ApplicationUser implements UserDetails {
         return null;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getPassword() {
         return this.password;
     }
@@ -97,8 +101,13 @@ public class ApplicationUser implements UserDetails {
     public String getFirstname() {
         return firstname;
     }
+
     public String getLastname() {
         return lastname;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
     }
 
     public void setBio(String bio) {
@@ -127,5 +136,25 @@ public class ApplicationUser implements UserDetails {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Set<ApplicationUser> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<ApplicationUser> followers) {
+        this.followers = followers;
+    }
+
+    public Set<ApplicationUser> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<ApplicationUser> following) {
+        this.following = following;
     }
 }

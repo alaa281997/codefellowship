@@ -1,17 +1,30 @@
-<header class="header" th:fragment="header" xmlns:th="http://www.springframework.org/schema/security">
-  <h1>Codefellowship</h1>
-  <nav>
-    <a href="/">Home</a>
+<style>
+    a{
+    color:white;
+    padding:1%;
+    }
+</style>
+
+<header style="background-color:black;height:20%" class="header" th:fragment="header" xmlns:th="http://www.springframework.org/schema/security">
+  <h1 style="color:white">Codefellowship</h1>
+
+  <nav style="text-align:center">
+      <p style="color:white;"> Hello, <span th:text="${principal}"></span>!</p>
+
+      <a href="/">Home</a>
 
     <span th:if="${principal == null}">
             <a href="/login">Log In</a>
             <a href="/signup">Sign Up</a>
         </span>
     <span th:unless="${principal == null}">
-            Hello, <span th:text="${principal}"></span>!
             <a href="/myprofile">My Profile</a>
-            <a href="/logout">Log out</a>
+            <a href="/users">Users</a>
         </span>
+      <a href="/following">Following List</a>
+      <a href="/post">Create Post</a>
+
+      <a href="/logout">Log out</a>
 
   </nav>
 </header>

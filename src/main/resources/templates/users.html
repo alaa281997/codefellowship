@@ -6,13 +6,21 @@
 </head>
 <body>
 
-<h1>Application User - <span th:text="${appUser.username}"></span></h1>
+<div th:replace="fragments/header :: header">...</div>
 
-<p>First Name: <span th:text="${appUser.firstname}"></span></p>
-<p>Last Name: <span th:text="${appUser.lastname}"></span></p>
-<p>Date of Birth: <span th:text="${appUser.dob}"></span></p>
-<p>Bio: <span th:text="${appUser.bio}"></span></p>
+<h2>Users</h2>
 
+<ul class="user-list">
+    <li th:each="user : ${users}">
+        <a th:href="@{'/users/' + ${user.id}}">
+            <span th:text="${user.firstname}"></span>
+            <span th:text="${user.lastname}"></span>
+        </a>
 
+        <form class="follow-button-form" method="POST" th:action="'/follow/' + ${user.id}" >
+            <button type="submit">Follow</button>
+        </form>
+    </li>
+</ul>
 </body>
 </html>
