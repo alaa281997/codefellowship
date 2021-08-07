@@ -9,7 +9,7 @@
   <h1 style="color:white">Codefellowship</h1>
 
   <nav style="text-align:center">
-      <p style="color:white;"> Hello, <span th:text="${principal}"></span>!</p>
+      <h2>Hello, <span th:text="${appUser.firstname}"></span></h2>
 
       <a href="/">Home</a>
 
@@ -23,7 +23,7 @@
         </span>
       <a href="/following">Following List</a>
       <a href="/post">Create Post</a>
-
+      <a href="/GeneralChat">Chat</a>
       <a href="/logout">Log out</a>
 
   </nav>
